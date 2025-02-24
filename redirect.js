@@ -33,6 +33,6 @@ window.onload = function () {
     } else if (/android/i.test(userAgent)) {
         createImageButton("images/playstore.png", playStoreUrl, "Get it on Google Play", "Get it on Google Play");
     } else {
-        createImageButton("images/googledrive.png", appStoreUrl, "Download for Other Devices", "Download for Other Devices");
+        createImageButton("images/googledrive.png", fallbackUrl, "Download for Other Devices", "Download for Other Devices");
     }
 };
