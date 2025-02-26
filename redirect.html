@@ -6,8 +6,31 @@
     <title>Supermyan</title>
     <script defer src="redirect.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @layer utilities {
+            .no-zoom {
+                touch-action: pan-x pan-y; /* Prevent pinch-to-zoom */
+            }
+        }
+    </style>
+    <!-- Prevent Zooming via JavaScript -->
+    <script>
+        document.addEventListener("wheel", function(event) {
+            if (event.ctrlKey) {
+                event.preventDefault(); // Prevent zooming with Ctrl + Scroll
+            }
+        }, { passive: false });
+
+        document.addEventListener("gesturestart", function(event) {
+            event.preventDefault(); // Prevent pinch-to-zoom on iOS
+        });
+
+        document.addEventListener("gesturechange", function(event) {
+            event.preventDefault();
+        });
+    </script>
 </head>
-<body class="flex flex-col items-center justify-center h-screen bg-gray-100 text-center p-4">
+<body class="flex flex-col items-center justify-center h-screen bg-gray-100 text-center p-4 no-zoom">
     <div id="header"></div>
 
     <p class="text-gray-600 mb-6">Click the button below to download the app for your device.</p>
