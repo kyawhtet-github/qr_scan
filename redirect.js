@@ -31,22 +31,27 @@ window.onload = function () {
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
         createImageButton("images/appstore.png", appStoreUrl, "Download on the App Store", "Download on the App Store");
     } else if (/android/i.test(userAgent)) {
-        // Check Play Store availability
+        // Check if Play Store is available using an iframe
         var testIframe = document.createElement("iframe");
         testIframe.style.display = "none";
-        testIframe.src = "market://details?id=com.uabfintech.supermyan";
+        testIframe.src = "intent://details?id=com.uabfintech.supermyan#Intent;scheme=market;package=com.android.vending;end;";
         document.body.appendChild(testIframe);
-        
+
+        var playStoreSupported = false;
+
         setTimeout(function () {
-            if (document.body.contains(testIframe)) {
-                // Store is not available
-                testIframe.remove();
+            if (!playStoreSupported) {
+                // Play Store not supported
                 createImageButton("images/googledrive.png", fallbackUrl, "Download for Other Devices", "Download for Other Devices");
-            } else {
-                // Play Store is available
-                createImageButton("images/playstore.png", playStoreUrl, "Get it on Google Play", "Get it on Google Play");
             }
-        }, 1500);
+            testIframe.remove();
+        }, 2000); // Wait 2 seconds before deciding
+
+        setTimeout(function () {
+            playStoreSupported = true;
+            // Play Store supported
+            createImageButton("images/playstore.png", playStoreUrl, "Get it on Google Play", "Get it on Google Play");
+        }, 1000); // If it loads within 1 second, Play Store is available
     } else {
         createImageButton("images/googledrive.png", fallbackUrl, "Download for Other Devices", "Download for Other Devices");
     }
