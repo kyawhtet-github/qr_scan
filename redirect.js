@@ -31,7 +31,14 @@ window.onload = function () {
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
         createImageButton("images/appstore.png", appStoreUrl, "Download on the App Store", "Download on the App Store");
     } else if (/android/i.test(userAgent)) {
-        createImageButton("images/playstore.png", playStoreUrl, "Get it on Google Play", "Get it on Google Play");
+        // Android devices
+        if (userAgent.includes("com.android.vending")) {
+            // Device has Google Play Store
+            createImageButton("images/playstore.png", playStoreUrl, "Get it on Google Play", "Get it on Google Play");
+        } else {
+            // Device doesn't have Google Play Store
+            createImageButton("images/googledrive.png", fallbackUrl, "Download for Other Devices", "Download for Other Devices");
+        }
     } else {
         createImageButton("images/googledrive.png", fallbackUrl, "Download for Other Devices", "Download for Other Devices");
     }
